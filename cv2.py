@@ -38,8 +38,6 @@ if cv2.cuda.getCudaEnabledDeviceCount() == 0:
 print("✅ CUDA kablo takibi başlatıldı.")
 
 stream = cv2.cuda_Stream()
-gpu_erode = cv2.cuda.createMorphologyFilter(cv2.MORPH_ERODE, cv2.CV_8UC1, np.ones((5, 5), np.uint8))
-gpu_dilate = cv2.cuda.createMorphologyFilter(cv2.MORPH_DILATE, cv2.CV_8UC1, np.ones((5, 5), np.uint8))
 gpu_close = cv2.cuda.createMorphologyFilter(cv2.MORPH_CLOSE, cv2.CV_8UC1, np.ones((5, 5), np.uint8))
 
 gpu_frame = cv2.cuda_GpuMat()
@@ -107,7 +105,7 @@ while True:
                         position_text = f"Kablo solda ({angle_ema:.1f}°)"
 
     if not kablo_var:
-        command = "D300"
+        command = "Q300"  # ⬅️ DÜZELTİLEN KISIM: Sağa keskin dönüş
 
     uart_queue.put(command)
     son_komut = command
@@ -129,5 +127,6 @@ while True:
 cap.release()
 cv2.destroyAllWindows()
 uart_queue.join()
+
 
 
